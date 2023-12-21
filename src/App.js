@@ -68,21 +68,20 @@ function App() {
       id : dataId.current,
     };
     dataId.current += 1;
-    setData([newItem, ...data]);
+    setData((data) => [newItem, ...data]);
   },[]);
 
-  const onRemove = (targetId) => {
+  const onRemove = useCallback((targetId) => {
     // console.log(`${targetId}가 삭제되었습니다.`);
-    const newDiaryList = data.filter((it) => it.id !== targetId);
-    console.log(newDiaryList);
-    setData(newDiaryList);
-  };
+    //console.log(newDiaryList);
+    setData((data) => data.filter((it) => it.id !== targetId));
+  }, []);
 
-  const onEdit = (targetId, newContent) => {
-    setData(
+  const onEdit = useCallback((targetId, newContent) => {
+    setData((data) =>
       data.map((it)=> it.id === targetId ? {...it, content:newContent} : it)
     );
-  };
+  },[]);
 
   const getDiaryAnalysis = useMemo(() => {
     // console.log("일기 분석 시작");
